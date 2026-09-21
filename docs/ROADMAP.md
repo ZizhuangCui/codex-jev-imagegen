@@ -29,3 +29,7 @@
 - [ ] Add explicit GPT Image API adapters only if needed beyond the built-in tool.
 
 No dates or performance improvements are promised. Connected-tool routing is implemented; standalone API clients and live provider validation remain future work.
+
+## Tracked delivery plan
+
+The [development plan](DEVELOPMENT.md) maps v0.3.0 live verification, v0.4.0 controlled evaluation and v1.0.0 stability gates to GitHub issues. [Milestones](https://github.com/ZizhuangCui/codex-jev-imagegen/milestones) are the current delivery tracker; no dates are promised.

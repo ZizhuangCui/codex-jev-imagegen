@@ -18,3 +18,12 @@
 - GitHub: publish update to existing public repository on main and package v0.2.0 preview.
 - Validation: 8 decision tests + 10 installation/CLI/routing tests pass offline; skill validator passes. No live provider calls or credential changes.
 - Limitations: external support is connected-tool routing, not bundled API clients. An inventory is agent-supplied discovery evidence, not proof of provider entitlement; actual invocation uses the connected tool's schema. No live accuracy/speed claims.
+
+## 2026-09-21 · Asia/Shanghai · Establish development tracking
+
+- Request: design and create issues, milestones, versioning and development process.
+- Planned commit: `Document release workflow and track milestone delivery`.
+- GitHub changes: created milestones v0.3.0 (live verification), v0.4.0 (controlled evaluation), v1.0.0 (stable contract); created issues #1–#7 with acceptance criteria, dependencies and evidence requirements; added priority/provider/evaluation/verification labels.
+- Local changes: development and release policy, changelog, feature/PR templates, README and contribution links. No runtime changes or new release tag.
+- Verification: inspect issue/milestone assignments; Markdown relative-link validation, sensitive-content scan and git whitespace check. Existing runtime tests are unchanged; CI runs on push.
+- Limits: milestones have no invented deadlines; no collaborators assigned, paid CI enabled or branch protection claimed. Live-provider and evaluation work remains open.

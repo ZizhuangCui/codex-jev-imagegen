@@ -119,3 +119,5 @@ python3 -B -m unittest discover -s tests -v
 下一步是固定同一生成后端，比较“同一工作流由 Codex 判断”和“由 Jev 判断”，再决定哪里值得保留 Jev。[验证方案](docs/EVALUATION.md) · [路线图](docs/ROADMAP.md)
 
 本仓库原创代码、文档与视觉素材采用 [MIT 许可证](LICENSE)。模型服务和用户图片遵守各自条款。本项目与 OpenAI、TypeSafe、字节跳动没有官方关联。
+
+[开发流程与里程碑](docs/DEVELOPMENT.md) · [Issues](https://github.com/ZizhuangCui/codex-jev-imagegen/issues) · [Changelog](CHANGELOG.md)

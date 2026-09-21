@@ -137,3 +137,5 @@ Explore the [decision contract](skills/jev-imagegen/references/contract.md), [ev
 ## License
 
 [MIT](LICENSE) for this repository's code, documentation, and original artwork. Provider services, model weights, and user images retain their own terms. An independent community project; not affiliated with OpenAI, TypeSafe, or ByteDance.
+
+[Development & milestones](docs/DEVELOPMENT.md) · [Issues](https://github.com/ZizhuangCui/codex-jev-imagegen/issues) · [Changelog](CHANGELOG.md)

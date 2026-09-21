@@ -27,3 +27,7 @@ Do not commit API keys, raw private prompts, account screenshots, personal files
 If you report performance, include all runs, call counts, model/backend identifiers, failure cases and quality checks. A single successful image is not an accuracy benchmark. See [the evaluation plan](docs/EVALUATION.md).
 
 Contributions are provided under the repository's MIT license. Do not copy GPL implementation code from the reference experiment into this project.
+
+## Development process
+
+Follow the [milestones, issue/PR lifecycle and release gates](docs/DEVELOPMENT.md). Use `codex/<issue-number>-<short-description>` branches and focused PRs. Read the [changelog](CHANGELOG.md) before changing public contracts.
