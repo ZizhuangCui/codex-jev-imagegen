@@ -1,0 +1,7 @@
+{
+  "user_request": "人物长相不变，只把背景换成雨夜街景。保留眼镜。",
+  "confirmed_constraints": ["保留人物身份", "保留眼镜"],
+  "reference_images": [
+    {"id": "example-portrait", "role": "edit_target", "description": "Synthetic example metadata; replace with a description of the actual inspected portrait."}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "user_request": "Change the background to a rainy street. Preserve the person's identity and glasses.",
+  "confirmed_constraints": ["Preserve identity", "Preserve glasses"],
+  "reference_images": [],
+  "visual_report": {
+    "output_id": "synthetic-example-only",
+    "observer": "example-author",
+    "inspected": false,
+    "findings": [],
+    "uncertainties": ["No actual image was inspected. Replace this with a real observation before a live review."]
+  }
+}

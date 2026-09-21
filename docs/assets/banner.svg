@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" role="img" aria-labelledby="title desc">
+  <title id="title">Jev ImageGen for Codex</title>
+  <desc id="desc">A decision workflow for image generation. Decide, generate, inspect. Experimental open-source Codex skill.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101d25"/><stop offset="1" stop-color="#172d32"/></linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#a7d9c9" stroke-opacity=".07"/></pattern>
+  </defs>
+  <rect width="1280" height="400" rx="20" fill="url(#bg)"/>
+  <rect width="1280" height="400" rx="20" fill="url(#grid)"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="58" y="48" width="270" height="28" rx="14" fill="#6ee7b7" fill-opacity=".12"/>
+    <text x="75" y="67" font-size="12" letter-spacing="2" fill="#8df0c5">OPEN-SOURCE CODEX SKILL</text>
+    <text x="56" y="154" font-size="60" font-weight="700" letter-spacing="-2" fill="#f1f5ef">Jev ImageGen</text>
+    <text x="60" y="196" font-size="26" fill="#a7bcb8">for Codex</text>
+    <text x="60" y="265" font-size="22" fill="#d4e6df">Decide. Generate. Inspect.</text>
+    <text x="60" y="301" font-size="15" fill="#9bb4b0">Intent-aware image workflows. Explicit constraints. Bounded repairs.</text>
+    <text x="60" y="361" font-size="12" letter-spacing="2" fill="#f5b56b">EXPERIMENTAL / v0.1.0</text>
+    <g transform="translate(785 68)">
+      <path d="M84 61H230V153H84V245H230" fill="none" stroke="#6ee7b7" stroke-opacity=".5" stroke-width="2"/>
+      <g fill="#203d3c" stroke="#49736b">
+        <rect x="0" y="14" width="176" height="72" rx="12"/>
+        <rect x="122" y="115" width="250" height="72" rx="12"/>
+        <rect x="0" y="217" width="220" height="72" rx="12"/>
+      </g>
+      <g font-size="12" fill="#6ee7b7"><text x="18" y="40">01 / DECISION</text><text x="141" y="141">02 / GENERATION</text><text x="18" y="243">03 / INSPECTION</text></g>
+      <g font-size="19" font-weight="700" fill="#f1f5ef"><text x="18" y="65">Jev</text><text x="141" y="166">Codex image_gen</text><text x="18" y="268">Observe + repair</text></g>
+    </g>
+  </g>
+</svg>
