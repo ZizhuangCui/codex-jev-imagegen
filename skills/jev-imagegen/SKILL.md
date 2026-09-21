@@ -1,18 +1,18 @@
 ---
 name: jev-imagegen
-description: Use Jev to classify image requests and choose bounded repair actions, then use Codex built-in image_gen to generate or edit images. Apply to Jev-assisted image creation, editing, or comparison against the same workflow without Jev. Does not modify model attention or denoising internals.
+description: Use Jev to classify image requests and choose bounded repair actions, then use Codex built-in image_gen or a connected GPT Image, Nano Banana, or Seedream tool to generate or edit images. Apply to Jev-assisted image creation, editing, or comparison against the same workflow without Jev. Does not modify model attention or denoising internals.
 ---
 
 # Jev + Codex image generation
 
-Deliver actual images through the built-in `image_gen` tool. Jev supplies text-based decisions; Codex understands references, compiles prompts, inspects results, and executes tool calls. This is the first version of that workflow, not a claim to run `gpt-image-1`.
+Deliver actual images through the built-in `image_gen` tool by default, or a verified connected tool for an explicitly selected model. Jev supplies text-based decisions; Codex understands references, compiles prompts, inspects results, and executes tool calls. Model selection and tool availability are checked separately from Jev decisions.
 
 ## Capability boundary
 
 - Read the available `imagegen` skill before actual generation. The current tool schema is authoritative: in this environment it supports `prompt`, `referenced_image_paths`, and `num_last_images_to_include`. It has no model selector, attention keep ratios, seeds, quality flags, masks, or sampler callbacks.
-- Use built-in image generation. Do not silently switch to OpenAI API/CLI or ask for an OpenAI API key for this path. Jev requires its own `TYPESAFE_API_KEY`; read the process environment by default. If the user identifies a secret file, load it without printing secrets; never execute an env file as shell code.
-- Do not label output as Gen1/Gen2/Gen2.5 unless actual tool metadata establishes the model. Read [capabilities.md](references/capabilities.md) for future migration; API model names are not selectable in this built-in adapter.
-- Seedream 5.0 Pro is included in the provider design, not in the built-in tool. If explicitly requested, preserve that choice and report that its external provider adapter/credentials must be connected; do not silently generate with image_gen and label it Seedream. Reuse the Jev decision contract when that adapter is implemented.
+- Default to built-in image generation. Do not silently switch to OpenAI API/CLI or ask for an OpenAI API key for this path. Jev requires its own `TYPESAFE_API_KEY`; read the process environment by default. If the user identifies a secret file, load it without printing secrets; never execute an env file as shell code.
+- Support GPT Image 1 / 1 mini / 1.5 / 2 / 2.5 Sunburst / 2.5 Flare; Nano Banana / Pro / 2 / 2 Lite; and Seedream 4.0 / 4.5 / 5.0 / 5.0 Lite / 5.0 Pro through **connected-tool routing**. The catalog is not proof that those tools are installed. Read [providers.md](references/providers.md) and use `scripts/route.py` against a fresh observed tool inventory before generation. No external HTTP adapters are bundled.
+- Exact model selection requires a tool whose schema or fixed-model contract establishes that model. The built-in tool cannot satisfy an explicit Gen1/2/2.5 selection merely by putting the name in the prompt. Do not label output with an unreported model. Read [capabilities.md](references/capabilities.md) for version IDs and sources. Ambiguous Image 2.5 requires choosing Sunburst or Flare; never silently substitute providers or versions.
 - Jev cannot inspect pixels. After generation it can evaluate a factual visual report from Codex or another actual image observer. It does not certify identity preservation.
 
 ## Before generation
@@ -27,7 +27,7 @@ Deliver actual images through the built-in `image_gen` tool. Jev supplies text-b
 
 ## Generate, observe, repair
 
-1. Invoke built-in image_gen once per requested asset. Use `referenced_image_paths` when all needed images have local paths; otherwise use the smallest `num_last_images_to_include` covering them, within the tool limit. Never set both. If required references cannot all be included, ask for the missing images instead of silently omitting them.
+1. Resolve the selected model/tool using [providers.md](references/providers.md). If blocked, stop without switching models. Invoke the resolved tool once per requested asset, following its actual schema and provider skill. For the built-in path: Use `referenced_image_paths` when all needed images have local paths; otherwise use the smallest `num_last_images_to_include` covering them, within the tool limit. Never set both. If required references cannot all be included, ask for the missing images instead of silently omitting them.
 2. Wait for completion and save the returned file non-destructively into the user's destination, or `output/jev-imagegen/<unique-run>/`. Never resubmit while the first call's outcome is unknown.
 3. Inspect the actual output against the request and anchors. Record `output_id`, `observer`, `inspected`, `findings`, `uncertainties`. Findings name affected areas and requested constraints. Do not invent numeric similarity scores.
 4. If the image meets observable requirements, deliver without another Jev call. If a defect exists and a repair decision would help, call `decide.py --phase review` with the visual report. It selects `accept`, `edit`, `regenerate`, or `human_review` using text only.
@@ -36,7 +36,7 @@ Deliver actual images through the built-in `image_gen` tool. Jev supplies text-b
 
 ## Evidence and comparison
 
-Save the request, locks, actual tool arguments, decision JSON, visual report, output paths, call counts and elapsed times in the run directory. Never persist a key. Cost is unknown when usage/pricing is unavailable.
+Save the request, locks, requested model, selected tool, reported model metadata (or null), actual tool arguments, decision JSON, visual report, output paths, call counts and elapsed times in the run directory. Never persist a key. Cost is unknown when usage/pricing is unavailable.
 
 For requested A/B tests, compare the same skill and prompt-compiler rules with Codex decisions versus Jev decisions. Match assets, constraints and call budgets. The built-in tool lacks a seed control; repeat and report variation instead of claiming matched seeds. Separate end-to-end time, image-call time, Jev overhead, attempts and defects. Fewer retries do not prove faster model inference; the reference repository's 41.7% figure is not our performance.
 

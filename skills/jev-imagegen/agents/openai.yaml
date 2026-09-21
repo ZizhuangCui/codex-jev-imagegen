@@ -1,4 +1,4 @@
 interface:
   display_name: "Jev 图片生成"
-  short_description: "用 Jev 判断需求与修复方向，通过 Codex 内置工具生成和编辑图片"
+  short_description: "用 Jev 判断需求与修复方向，支持内置生图及已连接的 GPT Image、Nano Banana、Seedream 工具"
   default_prompt: "使用 $jev-imagegen，根据我的图片需求选择生成或编辑流程，保留明确约束并检查结果。"

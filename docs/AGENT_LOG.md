@@ -9,3 +9,12 @@
 - Verification: decision tests, installation/CLI tests, skill structure validation, relative-link validation, SVG preview and sensitive-content scan before publication.
 - Limitations: no live Jev/image-generation evidence; confidence threshold uncalibrated; Seedream adapter remains design-only. Call budgets and persistent constraints are enforced by the agent following the skill, not by a standalone orchestrator.
 - Next work: provide real credentials privately and perform controlled live verification before making quality or latency claims.
+
+## 2026-09-21 · Asia/Shanghai · Add multi-model routing (v0.2.0)
+
+- Request: support mainstream GPT Image 1/2/2.5, Nano Banana and Seedream versions, with a concise README summary.
+- Planned commit: `Add multi-model routing for connected image tools`.
+- Changes: 15-version catalog, alias resolution, operation/reference-capacity checks, explicit blocked states, provider handoff instructions, bilingual READMEs and roadmap. Default stays Codex built-in generation.
+- GitHub: publish update to existing public repository on main and package v0.2.0 preview.
+- Validation: 8 decision tests + 10 installation/CLI/routing tests pass offline; skill validator passes. No live provider calls or credential changes.
+- Limitations: external support is connected-tool routing, not bundled API clients. An inventory is agent-supplied discovery evidence, not proof of provider entitlement; actual invocation uses the connected tool's schema. No live accuracy/speed claims.

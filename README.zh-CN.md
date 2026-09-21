@@ -6,9 +6,9 @@
 
 **给图片生成加上明确的判断、持续保留的约束，以及有限的修复次数。**
 
-这是一个可复用的 Codex Skill：Jev 判断用户想新建、编辑还是讨论；Codex 理解参考图、编写提示词、调用内置 `image_gen`，再检查真实成图。需要修复时，Jev 可以根据文字检查报告建议下一步。
+这是一个可复用的 Codex Skill：Jev 判断用户想新建、编辑还是讨论；Codex 理解参考图、编写提示词、调用内置 `image_gen` 或已连接的指定模型工具，再检查真实成图。需要修复时，Jev 可以根据文字检查报告建议下一步。
 
-> **v0.1.0 实验版。** 已实现 Skill、Jev 调用脚本和离线测试。尚未验证真实 Jev 的判断准确率、端到端生成效果、加速幅度或费用节省。仓库没有冒充实测结果的生成样图。
+> **v0.2.0 实验版。** 已实现 Skill、Jev 调用脚本和离线测试。尚未验证真实 Jev 的判断准确率、端到端生成效果、加速幅度或费用节省。仓库没有冒充实测结果的生成样图。
 
 ## 它解决什么问题
 
@@ -21,7 +21,7 @@
 
 ## 安装
 
-需要 Python 3.10+、Git，以及已提供内置 `image_gen` 的 Codex 环境。Python 脚本不依赖第三方包。
+需要 Python 3.10+、Git，以及有内置 `image_gen` 或兼容外部图片工具的 Codex 环境。Python 脚本不依赖第三方包。
 
 ```sh
 git clone https://github.com/ZizhuangCui/codex-jev-imagegen.git
@@ -66,7 +66,7 @@ Jev 单独按供应商计费；Codex 内置生图路径不使用 `OPENAI_API_KEY
 flowchart LR
   A[需求与已确认约束] --> B[Jev 判断意图和保留项]
   B --> C[Codex 编写提示词]
-  C --> D[内置 image_gen]
+  C --> D[内置或已连接的图片工具]
   D --> E[Codex 查看实际图片]
   E -->|满足要求| F[保存并交付]
   E -->|需要修复| G[Jev 根据文字报告建议动作]
@@ -76,15 +76,30 @@ flowchart LR
 
 Jev 不看图片，只读取文本。已批准原图、约束保留、图片调用预算由 Skill 指导 Codex 执行，**不是后台服务强制保证**；脚本负责输入校验、答案校验、单次网络调用和明确错误状态。
 
-## 模型支持范围
+## 多模型支持
 
-| 路径 | 当前状态 |
+同一套 Jev 工作流支持 **GPT Image、Nano Banana、Seedream**，通过模型识别与能力检查路由到 Codex 已连接的工具。
+
+| 系列 | 已登记版本 |
 | --- | --- |
-| Codex 内置 image_gen | 已实现 Skill 调用流程，端到端实测待完成；当前会话须有该工具。 |
-| GPT Image 1 / 2 / 2.5 | 已整理能力与迁移设计；内置工具当前没有型号选择参数。 |
-| Seedream 5.0 Pro | 已纳入外部生成后端设计；适配器、凭据与真实调用尚未完成。 |
+| GPT Image | 1、1 mini、1.5、2、2.5 Sunburst、2.5 Flare |
+| Nano Banana | 原版、Pro、2、2 Lite |
+| Seedream | 4.0、4.5、5.0、5.0 Lite、5.0 Pro |
 
-指定某个模型时，不会静默换成其他模型。首个工作流版本不等于指定 `gpt-image-1`。[完整能力边界](skills/jev-imagegen/references/capabilities.md)
+**默认使用 Codex 内置生图**，型号由平台管理。指定具体版本或外部模型，需要当前环境已连接支持该型号的工具。本版实现模型目录、能力校验和交接流程，**不包含外部 API 客户端，尚未完成各模型的真实调用验证**；登记型号不代表当前会话已开通，外部服务的权限与计费由供应商管理。
+
+```text
+使用 $jev-imagegen，用 Nano Banana Pro 修改这张图，保持人物身份。
+使用 $jev-imagegen，用 Seedream 5.0 Pro 生成商品海报。
+使用 $jev-imagegen，用 GPT Image 2.5 Sunburst 修复这张图。
+```
+
+Skill 先检查工具、型号、编辑能力和参考图容量，再调用；不可用时明确停止，不会悄悄换模型。只说 Image 2.5 时需明确 Sunburst 或 Flare。[型号与官方文档](skills/jev-imagegen/references/capabilities.md) · [工具路由规范](skills/jev-imagegen/references/providers.md)
+
+```sh
+# 查看已登记模型，不联网、不生图。
+python3 skills/jev-imagegen/scripts/route.py --list
+```
 
 ## 验证
 

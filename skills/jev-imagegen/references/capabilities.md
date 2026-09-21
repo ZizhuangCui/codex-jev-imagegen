@@ -1,46 +1,37 @@
-# Built-in image_gen and model families
+# Supported model families and availability
 
-Verified 2026-09-21. Capability design only; model-specific API adapters are not implemented or authorized by selecting this skill.
+Catalog checked 2026-09-21. **Support means model-aware connected-tool routing**, not bundled API clients or completed live validation. The built-in tool is the default. Explicit model requests require a connected tool with verified model selection or a fixed-model contract. See [execution instructions](providers.md).
 
-## Current executable path
+## Version catalog
 
-User explicitly selected **Codex built-in image_gen**, not an independent OpenAI API application. The skill passes a prompt and actual references through the tool schema. There is no model selector, `quality`, `steps`, `seed`, attention ratio, or intermediate latent access in the current tool. Do not invent those fields or try to set them through prose.
-
-Official [Codex image documentation](https://learn.chatgpt.com/docs/image-generation) currently describes built-in generation as using `gpt-image-2`. The runtime tool itself does not expose a choice or guarantee a model identity in every result. Record the model as unreported unless returned; distinguish documentation from observed metadata. Calling this skill's first release “v1” does not mean the model is `gpt-image-1`.
-
-## Preserve the requested family coverage
-
-| Family | Official API ID | Design treatment |
+| Name | Exact model ID | Official reference |
 | --- | --- | --- |
-| Gen1 | `gpt-image-1` | Base task contract: text-to-image, reference/edit inputs, explicit invariants. Keep this simple generation/edit loop as the conceptual starting point. No Gen1-specific API call in this release. |
-| Gen2 | `gpt-image-2` | Same task contract; API supports additional size controls. Built-in selection stays platform-managed. |
-| Gen2.5 | `gpt-image-2.5-sunburst`, `gpt-image-2.5-flare` | Official docs position Sunburst for precise editing and Flare for fast everyday generation. These are distinct model IDs, not an assumed `gpt-image-2.5` alias. |
-| Seedream 5.0 Pro | `doubao-seedream-5-0-pro-260628` (Volcengine Ark release listing) | External image provider, not a Codex built-in model. Reuse text generation/edit intent, references and invariants; adapter and live access remain pending. |
+| GPT Image 1 | `gpt-image-1` | [Documentation](https://developers.openai.com/api/docs/guides/tools-image-generation) |
+| GPT Image 1-mini | `gpt-image-1-mini` | [Documentation](https://developers.openai.com/api/docs/guides/tools-image-generation) |
+| GPT Image 1.5 | `gpt-image-1.5` | [Documentation](https://developers.openai.com/api/docs/guides/tools-image-generation) |
+| GPT Image 2 | `gpt-image-2` | [Documentation](https://developers.openai.com/api/docs/guides/tools-image-generation) |
+| GPT Image 2.5-sunburst | `gpt-image-2.5-sunburst` | [Documentation](https://developers.openai.com/api/docs/guides/tools-image-generation) |
+| GPT Image 2.5-flare | `gpt-image-2.5-flare` | [Documentation](https://developers.openai.com/api/docs/guides/tools-image-generation) |
+| Nano Banana | `gemini-2.5-flash-image` | [Documentation](https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash-image) |
+| Nano Banana Pro | `gemini-3-pro-image` | [Documentation](https://ai.google.dev/gemini-api/docs/models/gemini-3-pro-image) |
+| Nano Banana 2 | `gemini-3.1-flash-image` | [Documentation](https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-image) |
+| Nano Banana 2 Lite | `gemini-3.1-flash-lite-image` | [Documentation](https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite-image) |
+| Seedream 4.0 | `doubao-seedream-4-0-250828` | [Documentation](https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh) |
+| Seedream 4.5 | `doubao-seedream-4-5-251128` | [Documentation](https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh) |
+| Seedream 5.0 | `doubao-seedream-5-0-260128` | [Documentation](https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh) |
+| Seedream 5.0 Lite | `doubao-seedream-5-0-lite-260128` | [Documentation](https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh) |
+| Seedream 5.0 Pro | `doubao-seedream-5-0-pro-260628` | [Documentation](https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh) |
 
-The reusable information is `user_request`, reference roles, preserve/change requirements, exact text and visual findings. Keep provider parameters outside this business state. If future tools expose explicit selectors, add only the verified mappings then, without rewriting decision questions. Today, do not silently upgrade models or route between these families.
+Nano Banana's original, Pro, 2 and 2 Lite are distinct models. GPT Image 2.5 requires Sunburst or Flare; the resolver returns `choose_version` for an unspecified 2.5. Exact preview/snapshot IDs not in the catalog are not silently rewritten to stable IDs. Provider-specific IDs, including BytePlus vs Volcengine Seedream names, must be verified before adding a mapping. Catalog membership does not guarantee current account access.
 
-If the user later requests an independent API app: first resolve credentials and permitted model, then follow current official API docs and model availability. Preserve user-specified Gen1 even if newer models exist; explain access/deprecation issues if encountered rather than silently substituting.
+## Built-in image_gen
 
-Primary sources:
+No model selector is exposed in the current built-in schema. Preserve its actual prompt/reference interface; do not invent model, quality, seed, attention or sampling arguments. The [Codex image documentation](https://learn.chatgpt.com/docs/image-generation) describes its managed generation path, but actual model metadata may be absent. Record observed model as null unless returned. An explicit GPT Image 1/2/2.5 request cannot be fulfilled by simply putting a model name in the prompt.
 
-- [GPT Image 1](https://developers.openai.com/api/docs/models/gpt-image-1)
-- [GPT Image 2](https://developers.openai.com/api/docs/models/gpt-image-2)
-- [GPT Image 2.5 Sunburst](https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst)
-- [GPT Image 2.5 Flare](https://developers.openai.com/api/docs/models/gpt-image-2.5-flare)
-- [Image-generation tool](https://developers.openai.com/api/docs/guides/tools-image-generation)
+## External tools
 
-## Seedream 5.0 Pro extension
+Use current discovery to establish model availability, reference limits, editing support and options. API model IDs are catalog identifiers, not claims that this repository contains an API adapter. A model error stops that route; no automatic provider fallback. Provider access and billing are separate from Codex's built-in entitlement.
 
-Added at the user's request. The official Volcengine release listing identifies this model and describes text-to-image, single/multiple-reference generation and interactive editing. Treat location/marker editing as provider-specific capabilities; do not assume they share the built-in image_gen schema.
+Seedream sources also include the [official 2026 release record](https://docs.volcengine.com/docs/LakeAIService/FeatureReleaseRecord2026?lang=en) for 5.0/5.0 Lite and the [image-generation reference](https://www.volcengine.com/docs/82379/1541523). Volcengine's release page is partly client-rendered; inventory discovery remains necessary and capability limits are not hard-coded from its snippets.
 
-Design path: the same Jev plan → Codex prompt/reference preparation → **external Seedream adapter** → actual image inspection → optional Jev repair recommendation. The adapter is not implemented in this release. Keep `provider`/model settings in the execution layer rather than sending unsupported fields to `decide.py`.
-
-Before implementation, resolve the actual service (Volcengine Ark, BytePlus, or the user's existing provider), account access, exact model ID, image upload contract and billing. Do not assume credentials/model names or parameters are interchangeable across services. Seedream usage requires that provider's access and billing, not Codex's built-in image entitlement. Preserve an explicit Seedream selection even when unavailable; never silently substitute another model.
-
-Verification limit: the official release listing was searchable, but the tutorial body was not exposed by the documentation fetcher. Reference-image count, exact sizes, layer export, seed support, endpoint payload and prices are not hard-coded here until verified for the chosen provider. Third-party model listings are not treated as ByteDance's official API contract.
-
-- [Volcengine official model releases](https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh)
-- [BytePlus Seedream 5.0 Pro tutorial](https://docs.byteplus.com/en/docs/ModelArk/2582774)
-- [BytePlus interactive editing guide](https://docs.byteplus.com/en/docs/ModelArk/2582775)
-
-The currently implemented built-in interface exposes no per-layer attention control; no such control has been verified for Seedream. “Improve end-to-end completion by reducing wrong routes or rework” remains a hypothesis to measure, distinct from inference acceleration.
+Jev still sees text, not pixels. None of these routes exposes model attention control through this skill. Reducing rework remains an evaluation hypothesis, not a demonstrated inference speedup.

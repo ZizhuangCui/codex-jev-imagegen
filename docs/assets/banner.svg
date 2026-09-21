@@ -14,7 +14,7 @@
     <text x="60" y="196" font-size="26" fill="#a7bcb8">for Codex</text>
     <text x="60" y="265" font-size="22" fill="#d4e6df">Decide. Generate. Inspect.</text>
     <text x="60" y="301" font-size="15" fill="#9bb4b0">Intent-aware image workflows. Explicit constraints. Bounded repairs.</text>
-    <text x="60" y="361" font-size="12" letter-spacing="2" fill="#f5b56b">EXPERIMENTAL / v0.1.0</text>
+    <text x="60" y="361" font-size="12" letter-spacing="2" fill="#f5b56b">EXPERIMENTAL / v0.2.0</text>
     <g transform="translate(785 68)">
       <path d="M84 61H230V153H84V245H230" fill="none" stroke="#6ee7b7" stroke-opacity=".5" stroke-width="2"/>
       <g fill="#203d3c" stroke="#49736b">

@@ -12,9 +12,9 @@
 <p align="center"><strong>Give image generation a decision step, a memory of what to preserve, and a stopping point.</strong></p>
 <p align="center">English · <a href="README.zh-CN.md">简体中文</a></p>
 
-Jev ImageGen is a reusable **Codex skill** that puts [TypeSafe's Jev](https://docs.typesafe.ai/introduction) around Codex's built-in image generation. Jev classifies the request; Codex works with the images, writes the prompt, and checks the result. When a repair is useful, Jev can recommend the next action from a textual inspection report.
+Jev ImageGen is a reusable **Codex skill** that puts [TypeSafe's Jev](https://docs.typesafe.ai/introduction) around Codex image-generation workflows. Jev classifies the request; Codex works with the images, writes the prompt, and checks the result. When a repair is useful, Jev can recommend the next action from a textual inspection report.
 
-**v0.1.0 is an experimental workflow.** The helper and offline checks are implemented. Live Jev accuracy, end-to-end image quality, latency improvements, and cost savings have **not** been validated. This repository contains no generated-image benchmark or sample image presented as a real result.
+**v0.2.0 is an experimental workflow.** The helper and offline checks are implemented. Live Jev accuracy, end-to-end image quality, latency improvements, and cost savings have **not** been validated. This repository contains no generated-image benchmark or sample image presented as a real result.
 
 ## What it does
 
@@ -23,11 +23,11 @@ Jev ImageGen is a reusable **Codex skill** that puts [TypeSafe's Jev](https://do
 - **Make repairs deliberate:** inspect the actual output, then choose a local edit, a fresh attempt, or review.
 - **Keep execution bounded:** default to one image call plus at most one repair; expose failures and fallbacks.
 
-The built-in tool remains the image generator. This is a skill and a small Python helper, not a standalone web app, a new image model, or a model-inference accelerator.
+The selected image tool remains the image generator. This is a skill and a small Python helper, not a standalone web app, a new image model, or a model-inference accelerator.
 
 ## Quick start
 
-Requirements: Python 3.10+, Git, and a Codex environment that exposes the built-in `image_gen` tool. The helper has **no third-party Python dependencies**. Jev access is required only for live Jev decisions.
+Requirements: Python 3.10+, Git, and a Codex environment with built-in `image_gen` or a compatible connected image tool. The helper has **no third-party Python dependencies**. Jev access is required only for live Jev decisions.
 
 ```sh
 git clone https://github.com/ZizhuangCui/codex-jev-imagegen.git
@@ -76,7 +76,7 @@ flowchart LR
   B --> C[Codex: validate and compile prompt]
   B -. unavailable or uncertain .-> F[Explicit Codex fallback]
   F --> C
-  C --> D[Built-in image_gen]
+  C --> D[Built-in or connected image tool]
   D --> E[Codex inspects actual image]
   E -->|Meets requirements| G[Save and deliver]
   E -->|Repair needed| H[Jev reads inspection report]
@@ -86,15 +86,30 @@ flowchart LR
 
 Jev receives **text**, not pixels. An inspection report must come from an actual image observer. The skill instructs Codex to preserve approved anchors and apply the call budget; those controls are agent instructions, not a server-enforced state machine. The helper enforces its own input/response checks and single-request transport behavior.
 
-## Model support, precisely
+## Multi-model support
 
-| Image path | Status |
+One Jev workflow supports **GPT Image, Nano Banana, and Seedream** through model-aware routing to connected Codex tools.
+
+| Family | Registered versions |
 | --- | --- |
-| Codex built-in `image_gen` | Implemented skill path; requires the tool in your session. End-to-end validation pending. |
-| GPT Image 1 / 2 / 2.5 | Capability and migration notes. The current built-in tool has no explicit model selector. |
-| Seedream 5.0 Pro | External-provider design only. Adapter, credentials, and live verification are pending. |
+| GPT Image | 1, 1 mini, 1.5, 2, 2.5 Sunburst, 2.5 Flare |
+| Nano Banana | Original, Pro, 2, 2 Lite |
+| Seedream | 4.0, 4.5, 5.0, 5.0 Lite, 5.0 Pro |
 
-An explicit model choice is preserved. The skill does not silently substitute another provider or label an image as a model it did not verify. See [capabilities](skills/jev-imagegen/references/capabilities.md).
+**Default:** Codex built-in `image_gen`, with a platform-managed model. **Specific versions / external families:** require a connected tool that explicitly supports the requested model. This release implements the catalog, capability checks and agent handoff; it does not bundle external API clients or establish live provider validation. Registering a model does not make it available in your session. External provider access/billing is separate.
+
+```text
+Use $jev-imagegen with Nano Banana Pro to edit this image. Preserve the person's identity.
+Use $jev-imagegen with Seedream 5.0 Pro to generate a product poster.
+Use $jev-imagegen with GPT Image 2.5 Sunburst to repair the attached image.
+```
+
+The skill discovers the connected tool before calling it and stops if the requested model, edit operation or reference capacity is unavailable. It never silently substitutes a model. `Image 2.5` alone needs a Sunburst/Flare choice. [Version IDs and official sources](skills/jev-imagegen/references/capabilities.md) · [Tool-routing contract](skills/jev-imagegen/references/providers.md)
+
+```sh
+# List registered models; no network calls or generation.
+python3 skills/jev-imagegen/scripts/route.py --list
+```
 
 ## Checks and failure behavior
 

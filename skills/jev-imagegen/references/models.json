@@ -1,0 +1,142 @@
+{
+  "verified_on": "2026-09-21",
+  "models": [
+    {
+      "id": "gpt-image-1",
+      "label": "GPT Image 1",
+      "family": "openai",
+      "aliases": [
+        "image gen 1",
+        "gen1"
+      ],
+      "source": "https://developers.openai.com/api/docs/guides/tools-image-generation"
+    },
+    {
+      "id": "gpt-image-1-mini",
+      "label": "GPT Image 1-mini",
+      "family": "openai",
+      "aliases": [
+        "image gen 1 mini"
+      ],
+      "source": "https://developers.openai.com/api/docs/guides/tools-image-generation"
+    },
+    {
+      "id": "gpt-image-1.5",
+      "label": "GPT Image 1.5",
+      "family": "openai",
+      "aliases": [
+        "image gen 1.5"
+      ],
+      "source": "https://developers.openai.com/api/docs/guides/tools-image-generation"
+    },
+    {
+      "id": "gpt-image-2",
+      "label": "GPT Image 2",
+      "family": "openai",
+      "aliases": [
+        "image gen 2",
+        "gen2"
+      ],
+      "source": "https://developers.openai.com/api/docs/guides/tools-image-generation"
+    },
+    {
+      "id": "gpt-image-2.5-sunburst",
+      "label": "GPT Image 2.5-sunburst",
+      "family": "openai",
+      "aliases": [
+        "image gen 2.5 sunburst"
+      ],
+      "source": "https://developers.openai.com/api/docs/guides/tools-image-generation"
+    },
+    {
+      "id": "gpt-image-2.5-flare",
+      "label": "GPT Image 2.5-flare",
+      "family": "openai",
+      "aliases": [
+        "image gen 2.5 flare"
+      ],
+      "source": "https://developers.openai.com/api/docs/guides/tools-image-generation"
+    },
+    {
+      "id": "gemini-2.5-flash-image",
+      "label": "Nano Banana",
+      "family": "google",
+      "aliases": [
+        "nano banana"
+      ],
+      "source": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash-image"
+    },
+    {
+      "id": "gemini-3-pro-image",
+      "label": "Nano Banana Pro",
+      "family": "google",
+      "aliases": [
+        "nano banana pro"
+      ],
+      "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3-pro-image"
+    },
+    {
+      "id": "gemini-3.1-flash-image",
+      "label": "Nano Banana 2",
+      "family": "google",
+      "aliases": [
+        "nano banana 2"
+      ],
+      "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-image"
+    },
+    {
+      "id": "gemini-3.1-flash-lite-image",
+      "label": "Nano Banana 2 Lite",
+      "family": "google",
+      "aliases": [
+        "nano banana 2 lite"
+      ],
+      "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite-image"
+    },
+    {
+      "id": "doubao-seedream-4-0-250828",
+      "label": "Seedream 4.0",
+      "family": "seedream",
+      "aliases": [
+        "seedream 4.0"
+      ],
+      "source": "https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh"
+    },
+    {
+      "id": "doubao-seedream-4-5-251128",
+      "label": "Seedream 4.5",
+      "family": "seedream",
+      "aliases": [
+        "seedream 4.5"
+      ],
+      "source": "https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh"
+    },
+    {
+      "id": "doubao-seedream-5-0-260128",
+      "label": "Seedream 5.0",
+      "family": "seedream",
+      "aliases": [
+        "seedream 5.0"
+      ],
+      "source": "https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh"
+    },
+    {
+      "id": "doubao-seedream-5-0-lite-260128",
+      "label": "Seedream 5.0 Lite",
+      "family": "seedream",
+      "aliases": [
+        "seedream 5.0 lite"
+      ],
+      "source": "https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh"
+    },
+    {
+      "id": "doubao-seedream-5-0-pro-260628",
+      "label": "Seedream 5.0 Pro",
+      "family": "seedream",
+      "aliases": [
+        "seedream 5.0 pro"
+      ],
+      "source": "https://docs.volcengine.com/docs/ark/model-release-announcement?lang=zh"
+    }
+  ]
+}
